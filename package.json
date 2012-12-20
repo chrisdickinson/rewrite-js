@@ -1,0 +1,31 @@
+{
+  "name": "rewrite-js",
+  "version": "0.0.0",
+  "description": "CLI tool to transform javascript programs using falafel",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "bin": {
+    "rewrite-js": "./bin/rewrite-js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/chrisdickinson/rewrite-js.git"
+  },
+  "keywords": [
+    "cli",
+    "ast",
+    "transform"
+  ],
+  "author": "Chris Dickinson <chris@neversaw.us>",
+  "license": "MIT",
+  "preferGlobal": "true",
+  "dependencies": {
+    "cssauron": "0.0.2",
+    "cssauron-falafel": "0.0.0",
+    "nopt": "~2.0.0",
+    "concat-stream": "~0.1.0",
+    "falafel": "~0.1.4"
+  }
+}
