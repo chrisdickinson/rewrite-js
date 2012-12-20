@@ -26,6 +26,10 @@ function rewrite_async_wrap(node) {
 // takes `async(function() { })` and rewrites it to `function() { }`
 ```
 
+# Installation
+
+`npm install -g rewrite-js`
+
 # License
 
 MIT
