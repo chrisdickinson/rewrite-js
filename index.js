@@ -43,7 +43,10 @@ function run() {
   }
 
   process.stdin.pipe(concat(got_source))
-  process.stdin.resume()
+  
+  if(process.stdin.paused) {
+    process.stdin.resume()
+  }
 
   function got_source(err, data) {
     if(err) throw err
