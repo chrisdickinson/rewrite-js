@@ -5,7 +5,7 @@ and [cssauron](http://github.com/chrisdickinson/cssauron). Works great with Vim!
 
 ```bash
 
-# usage: rewrite-ms [tranform-module, ...]
+# usage: rewrite-js [tranform-module, ...]
 $ cat myfile.js | rewrite-js transform.js > myfile-transformed.js
 
 ```
