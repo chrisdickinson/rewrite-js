@@ -22,10 +22,10 @@
   "license": "MIT",
   "preferGlobal": "true",
   "dependencies": {
-    "cssauron": "0.0.2",
-    "cssauron-falafel": "0.0.0",
     "nopt": "~2.0.0",
     "concat-stream": "~0.1.0",
-    "falafel": "~0.1.4"
+    "cssauron-falafel": "~1.0.0",
+    "falafel": "~0.3.1",
+    "cssauron": "~1.0.0"
   }
 }
