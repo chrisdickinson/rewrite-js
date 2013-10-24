@@ -1,20 +1,20 @@
-var tty = require('tty')
-  , path = require('path')
+var path = require('path')
+  , tty = require('tty')
   , fs = require('fs')
 
-var concat = require('concat-stream')
-  , nopt = require('nopt')
-  , language = require('cssauron-falafel')
+var language = require('cssauron-falafel')
+  , concat = require('concat-stream')
   , falafel = require('falafel')
+  , nopt = require('nopt')
   , shorthand
   , options
 
 options = {
-  'help': Boolean
+    'help': Boolean
 }
 
 shorthand = {
-  'h': ['--help']
+    'h': ['--help']
 }
 
 module.exports = run
@@ -27,14 +27,16 @@ rewrite-js [transform-module ...]
   by each of the transform-modules on stdout.
 */
 
-  var str = help+''
+  var str = help + ''
 
-  process.stdout.write(str.slice(str.indexOf('/*')+3, str.indexOf('*/')))
+  process.stdout.write(
+      str.slice(str.indexOf('/*') + 3, str.indexOf('*/'))
+  )
 }
 
 function run() {
-  var parsed = nopt(options, shorthand)
-    , stdintty = tty.isatty(process.stdin)
+  var stdintty = tty.isatty(process.stdin)
+    , parsed = nopt(options, shorthand)
     , transform = null
     , source = null
 
@@ -43,39 +45,61 @@ function run() {
   }
 
   process.stdin.pipe(concat(got_source))
-  
+
   if(process.stdin.paused) {
     process.stdin.resume()
   }
 
   function got_source(err, data) {
-    if(err) throw err
-
-    source = data
-    transform = parse_transform(require(path.join(process.cwd(), parsed.argv.remain[0])))
-    source = falafel(source+'', apply_transform)
-
-    if(!parsed.argv.remain.length) {
-      return process.stdout.write(source)
+    if(err) {
+      throw err
     }
 
+    source = data
+
+    transform = parse_transform(
+        require(path.join(process.cwd(), parsed.argv.remain[0]))
+    )
+    source = falafel(source + '', apply_transform)
+
     parsed.argv.remain.shift()
+    if(!parsed.argv.remain.length) {
+      return process.stdout.write(source + '')
+    }
+
     got_source(null, source)
   }
 
   function apply_transform(node) {
+    var target
+      , result
+
     for(var i = 0, len = transform.length; i < len; ++i) {
-      if(transform[i][0](node)) {
-        if(transform[i][1](node) === false) break
+      if(target = transform[i][0](node)) {
+        console.log(target.type, transform[i][1].name)
+        result = transform[i][1].apply(
+            null
+          , Array.isArray(target) ? target : [target]
+        )
+
+        if(result === false) {
+          break
+        }
       }
-    } 
+    }
   }
 
   function parse_transform(trans) {
     var output = []
+
     for(var key in trans) {
-      output.push([language(key), typeof trans[key] === 'string' ? Function('node', 'return '+trans[key]) : trans[key]])
+      output.push([
+          language(key)
+        , typeof trans[key] === 'string' ?
+          Function('node', 'return ' + trans[key]) : trans[key]
+      ])
     }
+
     return output
   }
 }
