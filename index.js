@@ -76,7 +76,6 @@ function run() {
 
     for(var i = 0, len = transform.length; i < len; ++i) {
       if(target = transform[i][0](node)) {
-        console.log(target.type, transform[i][1].name)
         result = transform[i][1].apply(
             null
           , Array.isArray(target) ? target : [target]
