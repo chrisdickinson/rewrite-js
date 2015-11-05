@@ -24,8 +24,8 @@
   "dependencies": {
     "nopt": "~2.0.0",
     "concat-stream": "~0.1.0",
-    "cssauron-falafel": "~1.0.0",
+    "cssauron-falafel": "~1.2.1",
     "falafel": "~0.3.1",
-    "cssauron": "~1.0.0"
+    "cssauron": "~1.2.0"
   }
 }
