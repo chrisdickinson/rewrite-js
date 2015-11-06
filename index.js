@@ -46,8 +46,8 @@ function run() {
   }
 
   process.stdin.pipe(concat(function(err,source){
-    if(!err) source = remove_hash_bang(source+'')
-    got_source(err,source)
+    if(!err) source = remove_hash_bang(source + '')
+    got_source(err, source)
   }))
 
   if(process.stdin.paused) {
@@ -109,9 +109,9 @@ function run() {
   }
 
   function remove_hash_bang(source){
-    if(source.slice(0,2) === "#!") {
-      pre = source.substr(0,source.indexOf("\n"))
-      source = source.substr(source.indexOf("\n"))    
+    if(source.slice(0, 2) === '#!') {
+      pre = source.substr(0, source.indexOf('\n'))
+      source = source.substr(source.indexOf('\n'))
     }
     return source
   }
