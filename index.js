@@ -57,15 +57,17 @@ function run() {
 
     source = data
 
-    transform = parse_transform(
-        require(path.join(process.cwd(), parsed.argv.remain[0]))
-    )
-    source = falafel(source + '', apply_transform)
+    var next = parsed.argv.cooked.shift()
 
-    parsed.argv.remain.shift()
-    if(!parsed.argv.remain.length) {
+    if(!next || next === '--') {
       return process.stdout.write(source + '')
     }
+
+    transform = parse_transform(
+        require(path.join(process.cwd(), next))
+    )
+
+    source = falafel(source + '', apply_transform)
 
     got_source(null, source)
   }
