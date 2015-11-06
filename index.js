@@ -109,7 +109,7 @@ function run() {
   }
 
   function remove_hash_bang(source){
-    if(source.indexOf('#!') === 0) {
+    if(source.slice(0,2) === "#!") {
       pre = source.substr(0,source.indexOf("\n"))
       source = source.substr(source.indexOf("\n"))    
     }
