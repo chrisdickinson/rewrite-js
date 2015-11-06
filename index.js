@@ -39,12 +39,16 @@ function run() {
     , parsed = nopt(options, shorthand)
     , transform = null
     , source = null
+    , pre = ''
 
   if(parsed.help || (!parsed.argv.remain.length && stdintty)) {
     return help(), process.exit(1)
   }
 
-  process.stdin.pipe(concat(got_source))
+  process.stdin.pipe(concat(function(err,source){
+    if(!err) source = remove_hash_bang(source+'')
+    got_source(err,source)
+  }))
 
   if(process.stdin.paused) {
     process.stdin.resume()
@@ -60,7 +64,7 @@ function run() {
     var next = parsed.argv.cooked.shift()
 
     if(!next || next === '--') {
-      return process.stdout.write(source + '')
+      return process.stdout.write(pre + source)
     }
 
     transform = parse_transform(
@@ -102,5 +106,13 @@ function run() {
     }
 
     return output
+  }
+
+  function remove_hash_bang(source){
+    if(source.slice(0,2) === "#!") {
+      pre = source.substr(0,source.indexOf("\n"))
+      source = source.substr(source.indexOf("\n"))    
+    }
+    return source
   }
 }
