@@ -10,7 +10,8 @@ var language = require('cssauron-falafel')
   , options
 
 options = {
-    'help': Boolean
+    'help': Boolean,
+    'falafelOptions': String
 }
 
 shorthand = {
@@ -44,6 +45,11 @@ function run() {
   if(parsed.help || (!parsed.argv.remain.length && stdintty)) {
     return help(), process.exit(1)
   }
+  var falafelOptions = {};
+  if (parsed.falafelOptions){
+    //if we fail parse, throw.
+    falafelOptions = JSON.parse(parsed.falafelOptions);
+  }
 
   process.stdin.pipe(concat(function(err,source){
     if(!err) source = remove_hash_bang(source + '')
@@ -61,7 +67,7 @@ function run() {
 
     source = data
 
-    var next = parsed.argv.cooked.shift()
+    var next = parsed.argv.remain.shift()
 
     if(!next || next === '--') {
       return process.stdout.write(pre + source)
@@ -71,7 +77,7 @@ function run() {
         require(path.join(process.cwd(), next))
     )
 
-    source = falafel(source + '', apply_transform)
+    source = falafel(source + '', falafelOptions, apply_transform)
 
     got_source(null, source)
   }
