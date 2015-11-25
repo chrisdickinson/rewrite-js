@@ -45,13 +45,13 @@ function run() {
   if(parsed.help || (!parsed.argv.remain.length && stdintty)) {
     return help(), process.exit(1)
   }
-  var falafelOptions = {};
-  if (parsed.falafelOptions){
-    //if we fail parse, throw.
-    falafelOptions = JSON.parse(parsed.falafelOptions);
+  var falafelOptions = {}
+  if(parsed.falafelOptions) {
+    // if we fail parse, throw.
+    falafelOptions = JSON.parse(parsed.falafelOptions)
   }
 
-  process.stdin.pipe(concat(function(err,source){
+  process.stdin.pipe(concat(function(err, source) {
     if(!err) source = remove_hash_bang(source + '')
     got_source(err, source)
   }))
