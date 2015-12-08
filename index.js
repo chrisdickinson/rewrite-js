@@ -72,11 +72,11 @@ function run() {
     if(!next || next === '--') {
       return process.stdout.write(pre + source)
     }
-    if (next === '--falafelOptions'){
-      if (parsed.argv.cooked.length > 0){
-        parsed.argv.cooked.shift();
+    if (next === '--falafelOptions') {
+      if (parsed.argv.cooked.length > 0) {
+        parsed.argv.cooked.shift()
       }
-      return got_source(null, source);
+      return got_source(null, source)
     }
 
     transform = parse_transform(
